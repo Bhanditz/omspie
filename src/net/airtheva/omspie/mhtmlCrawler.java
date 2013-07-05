@@ -1,8 +1,8 @@
 package net.airtheva.omspie;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,9 +29,14 @@ public class mhtmlCrawler implements ICrawler{
 			
 			mLastModified = new Date(mFile.lastModified()).getTime();
 
-			BufferedReader reader = new BufferedReader(new FileReader(mFile));
-			String text = Utility.ReadLines(reader);
-			reader.close();
+			FileInputStream input = new FileInputStream(mFile);
+			// FIXME: No need to read all the file.
+			byte[] bytes = new byte[2048];
+			input.read(bytes);
+			input.close();
+			
+			// The ending may be broken.
+			String text = new String(bytes, "utf-8");
 			
 			Pattern titlePattern = Pattern.compile("<title>(.+)</title>", Pattern.DOTALL);
 			Matcher titleMatcher = titlePattern.matcher(text);
