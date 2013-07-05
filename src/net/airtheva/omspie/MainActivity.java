@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import java.io.*;
 
 public class MainActivity extends Activity {
 
@@ -11,9 +12,18 @@ public class MainActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		mHive = new Hive();
+		try
+		{
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_main);
+			File copyShell = new File(getFilesDir(), "copy.sh");
+			Utility.SaveStreamFile(getAssets().open("copy.sh"), copyShell);
+			mHive = new Hive(this);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -28,12 +38,23 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		switch(item.getItemId())
 		{
-		case R.id.start:
-			mHive.Start();
+		case R.id.copy:
+			mHive.Copy();
+			break;
+		case R.id.extract:
+			mHive.Extract();
 			break;
 		case R.id.export:
 			mHive.Export();
 			break;
+		case R.id.fusion:
+			mHive.Fusion();
+			break;
+		case R.id.cleanup:
+			mHive.Cleanup();
+			break;
+		case R.id.exit:
+		System.exit(0);
 		}
 		return super.onOptionsItemSelected(item);
 	}

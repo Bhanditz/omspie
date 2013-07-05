@@ -1,4 +1,4 @@
 omspie
 ======
 
-Opera Mini Saved Pages Information Exporter
+Opera Mini/Mobile Saved Pages Information Exporter
