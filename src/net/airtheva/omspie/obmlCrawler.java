@@ -21,7 +21,7 @@ public class obmlCrawler implements ICrawler{
 	int getUnsignedByteValue(byte b)
 	{
 		// I need unsigned byte.
-		// "& 0xff" saves me, unknown but powerful.=w=
+		// "& 0xff" saves me, unknown but powerful=w=
 		return b & 0xff;
 	}
 	
